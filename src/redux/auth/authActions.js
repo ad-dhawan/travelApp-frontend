@@ -1,4 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Linking } from "react-native";
+
 import { AxiosInstance } from "../../services/AxiosInstance";
 import * as Endpoints from '../endpoints';
 
@@ -10,10 +12,40 @@ export const googlesignin = createAsyncThunk(
 
         let res = await AxiosInstance.get(URL);
         console.log(`googlesignin response: ${res.data}`);
-        return { data, response: res.data };
+        // return { response: res.data };
+
+        await Linking.openURL(res.data)
 
        } catch (error) {
+          console.log(`Google SignIn error: `, error)
+         if (error.response) {
+           return rejectWithValue({
+             status: error.response.status,
+             data: error.response.data,
+           });
+         } else {
+           return rejectWithValue({
+             status: -1,
+             data: { message: "Network Error" },
+           });
+         }
 
+       }
+     }
+);
+
+export const emailsignin = createAsyncThunk(
+     "emailsignin",
+     async (data, { rejectWithValue, getState }) => {
+       const URL = Endpoints.EMAIL_SIGNIN;
+       try {
+
+        let res = await AxiosInstance.post(URL, data);
+        console.log(`emailsignin response: ${res.data}`);
+        return { response: res.data };
+
+       } catch (error) {
+          console.log(`Email SignIn error: `, error)
          if (error.response) {
            return rejectWithValue({
              status: error.response.status,

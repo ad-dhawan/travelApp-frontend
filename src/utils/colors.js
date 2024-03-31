@@ -7,6 +7,7 @@ export const ERROR = '#F93232';
 export const TEXT = '#000000';
 export const TEXT_WHITE = '#FFFFFF'
 export const BACKGROUND = '#FFFFFF'
+export const BACKGROUND_OVERLAY = '#00000070'
 export const TEXTINPUT_UNFOCUSED = '#00000023'
 export const TEXTINPUT_FOCUSED = '#00000023'
 export const TEXTINPUT_ICON = '#00000056'

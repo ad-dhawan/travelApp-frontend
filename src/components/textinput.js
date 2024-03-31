@@ -3,7 +3,7 @@ import { View, TextInput, TouchableOpacity } from 'react-native';
 import { PLACEHOLDER_COLOR, TEXT, TEXTINPUT_UNFOCUSED } from '../utils/colors';
 
 /**
- * <EwTextInput
+ * <AppTextInput
         placeholder="Enter Password"
         value={password}
         onChangeText={text => setPassword(text)}
@@ -15,7 +15,7 @@ import { PLACEHOLDER_COLOR, TEXT, TEXTINPUT_UNFOCUSED } from '../utils/colors';
     />
  */
 
-const EwTextInput = ({
+const AppTextInput = ({
   placeholder = '',
   value = '',
   onChangeText = () => {},
@@ -24,13 +24,15 @@ const EwTextInput = ({
   rightIcon = null,
   onPressRightIcon = () => {},
   customStyle = {},
+  customTextStyle = {},
+  placeholderColor = PLACEHOLDER_COLOR,
   maxLength = null,
   keyboardType = 'default',
   editable = true
 }) => {
   const renderLeftIcon = () => {
     if (leftIcon) {
-      return <View style={{ marginRight: 8 }}>{leftIcon}</View>;
+      return <View style={{ marginRight: 4 }}>{leftIcon}</View>;
     }
     return null;
   };
@@ -57,7 +59,7 @@ const EwTextInput = ({
           borderRadius: 10,
           borderWidth: 1,
           borderColor: TEXTINPUT_UNFOCUSED,
-          paddingHorizontal: 12
+          paddingHorizontal: 8
         },
         customStyle,
       ]}
@@ -68,10 +70,10 @@ const EwTextInput = ({
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureText}
-        style={{ flex: 1, fontSize: 20, paddingVertical: 12, color: TEXT }}
+        style={[{ flex: 1, fontSize: 14, paddingVertical: 6, color: TEXT }, customTextStyle]}
         maxLength={maxLength}
         keyboardType={keyboardType}
-        placeholderTextColor={PLACEHOLDER_COLOR}
+        placeholderTextColor={placeholderColor}
         editable={editable}
         
       />
@@ -80,4 +82,4 @@ const EwTextInput = ({
   );
 };
 
-export default EwTextInput;
+export default AppTextInput;

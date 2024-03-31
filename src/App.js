@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {Text} from 'react-native'
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 import { Provider as PaperProvider} from 'react-native-paper';
 
 import AppNavigator from './AppNavigator';
 
-const FILE_NAME = 'App.js'
+let persistor = persistStore(store);
 
 const App = () => {
 
@@ -16,13 +19,15 @@ const App = () => {
   
   return (
     <Provider store={store}>
-      <PaperProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <PaperProvider>
 
-        <AppNavigator />
+          <AppNavigator />
 
-      </PaperProvider>
+        </PaperProvider>
+      </PersistGate>
     </Provider>
   );
 };
 
-export default CodePush(App);
+export default App;

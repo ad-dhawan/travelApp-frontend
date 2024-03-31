@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 /**
- * <EwButton
+ * <AppButton
         text={'Login'}
         onPress={() => console.log('button pressed')}
         customStyle={{ marginTop: 50 }}
@@ -15,7 +15,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
  */
 import { PRIMARY_BRAND_2, TEXT_WHITE } from '../utils/colors'
 
-const EwButton = ({text, onPress, customStyle, customTextStyle}) => {
+const AppButton = ({text, onPress, customStyle, customTextStyle}) => {
     return(
         <>
             <TouchableOpacity onPress={onPress} style={[ styles.container, customStyle ]} activeOpacity={0.9} >
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default EwButton;
+export default AppButton;

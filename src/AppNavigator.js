@@ -7,6 +7,10 @@ import Login from './screens/login/loginscreen';
 //PROFILE
 import Profile from './screens/profile/profilescreen';
 
+//DASHBORD
+import Dashboard from './screens/dashboard/dashboardscreen';
+import Splash from './screens/splash/splashscreen';
+
 //TRIPS
 import UpcomingTrips from './screens/trip/upcomingtripscreen';
 import MyTrips from './screens/trip/mytripscreen';
@@ -29,7 +33,9 @@ export function createAppNavigator(routes) {
 }
 
 const routes = {
+  splash: { screen: Splash },
   login: { screen: Login },
+  dashboard: { screen: Dashboard },
   profile: { screen: Profile },
   upcomingTrips: { screen: UpcomingTrips },
   myTrips: { screen: MyTrips },
