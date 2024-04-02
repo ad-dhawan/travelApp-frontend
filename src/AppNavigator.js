@@ -35,9 +35,9 @@ export function createAppNavigator(routes) {
 const routes = {
   splash: { screen: Splash },
   login: { screen: Login },
-  dashboard: { screen: Dashboard },
-  profile: { screen: Profile },
   upcomingTrips: { screen: UpcomingTrips },
+  // dashboard: { screen: Dashboard },
+  profile: { screen: Profile },
   myTrips: { screen: MyTrips },
   bookings: { screen: Bookings },
   documents: { screen: Documents },

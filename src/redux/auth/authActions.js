@@ -61,4 +61,33 @@ export const emailsignin = createAsyncThunk(
        }
      }
 );
+
+export const getUser = createAsyncThunk(
+  "getUser",
+  async (data, { rejectWithValue, getState }) => {
+    const { token, userInfo } = getState().authentication;
+    const URL = `${Endpoints.GET_USER}?userId=${userInfo._id}&authToken=${token}&searchUser=${userInfo._id}`;
+    try {
+
+     let res = await AxiosInstance.get(URL);
+     console.log(`getUser response: ${res.data}`);
+     return { response: res.data };
+
+    } catch (error) {
+       console.log(`getUser error: `, error)
+      if (error.response) {
+        return rejectWithValue({
+          status: error.response.status,
+          data: error.response.data,
+        });
+      } else {
+        return rejectWithValue({
+          status: -1,
+          data: { message: "Network Error" },
+        });
+      }
+
+    }
+  }
+);
  

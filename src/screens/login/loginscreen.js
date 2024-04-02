@@ -31,7 +31,7 @@ const Login = ({navigation}) => {
     }, [])
 
     useEffect(() => {
-        if(state.success) navigation.replace('dashboard')
+        if(state.success) navigation.replace('upcomingTrips')
     }, [state.success])
 
     const onPressGoogle = () => {

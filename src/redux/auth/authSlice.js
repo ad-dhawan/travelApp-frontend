@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {  googlesignin, emailsignin } from "./authActions";
+import {  googlesignin, emailsignin, getUser } from "./authActions";
 
 const initialState = {
     loading: false,
@@ -8,7 +8,8 @@ const initialState = {
     error: null,
     success: false,
     message: null,
-    status: null
+    status: null,
+    token: ""
 }
 
 export const authSlice = createSlice({
@@ -23,6 +24,9 @@ export const authSlice = createSlice({
       state.success = false;
       state.status = null;
     },
+    resetState: (state) => {
+      state = initialState
+    },
   },
    extraReducers: (builder) => {
      builder.addCase(googlesignin.pending, (state) => {
@@ -33,6 +37,7 @@ export const authSlice = createSlice({
        state.loading = false;
        state.success = true;
        state.userInfo = payload?.response?.data;
+       state.token = payload?.response?.token;
      });
      builder.addCase(googlesignin.rejected, (state, { payload }) => {
        console.log(payload);
@@ -51,8 +56,27 @@ export const authSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.userInfo = payload?.response?.user;
+      state.token = payload?.response?.token;
     });
     builder.addCase(emailsignin.rejected, (state, { payload }) => {
+      console.log(payload);
+      state.loading = false;
+      state.status = payload?.status;
+      state.error = true;
+      state.message = payload?.message;
+    });
+
+
+    builder.addCase(getUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUser.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.loading = false;
+      state.success = true;
+      state.userInfo = payload?.response?.user;
+    });
+    builder.addCase(getUser.rejected, (state, { payload }) => {
       console.log(payload);
       state.loading = false;
       state.status = payload?.status;

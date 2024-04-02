@@ -7,7 +7,7 @@ const Splash = ({navigation}) => {
 
     useEffect(() => {
         console.log("user info from splash: ", state)
-        state.userInfo ? navigation.replace('dashboard') : navigation.replace('login');
+        state.userInfo ? navigation.replace('upcomingTrips') : navigation.replace('login');
     }, []);
 
     return(
