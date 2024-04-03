@@ -30,12 +30,13 @@ const styles = StyleSheet.create({
         backgroundColor: PRIMARY_BRAND_2,
         borderRadius: 8,
         paddingVertical: 10,
+        paddingHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
     buttonText:{
-        fontSize: 15,
-        fontWeight: 500,
+        fontSize: 14,
+        fontWeight: '500',
         color: TEXT_WHITE,
         textTransform: 'uppercase'
     }

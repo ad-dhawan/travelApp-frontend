@@ -12,6 +12,7 @@ const Loading = () => {
                         width: 200
                     }}
                     source={require('../assets/animations/loading.json')} autoPlay loop
+                    duration={2000}
                 />
             </View>
         </>

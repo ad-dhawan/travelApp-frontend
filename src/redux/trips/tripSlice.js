@@ -35,7 +35,7 @@ export const tripSlice = createSlice({
       state.status = null;
     },
     resetState: (state) => {
-      state = initialState
+      Object.assign(state, initialState);
     },
   },
    extraReducers: (builder) => {
@@ -100,7 +100,7 @@ export const tripSlice = createSlice({
        console.log(payload);
        state.loading = false;
        state.success = true;
-       state.noteDetails = payload?.response?.notes;
+       state.noteDetails = payload?.response?.list;
      });
      builder.addCase(getNoteDetails.rejected, (state, { payload }) => {
        console.log(payload);

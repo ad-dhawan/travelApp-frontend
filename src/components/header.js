@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 /**
  * ICONS
  */
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 /**
@@ -13,41 +12,15 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { BACKGROUND, TEXT } from '../utils/colors';
 import { SCREEN_WIDTH } from '../utils/values';
 
-/**
- * FUNCTIONS
- */
-import { clearLocalStorage } from '../methods/storage/clearStorage';
-import { deleteUserDetails } from '../methods/storage/saveUser';
-
-const Header = ({navigation, backButton, cameraSwitch, onClickCameraSwitch}) => {
-    
-    const performLogout = async() => {
-        // await clearLocalStorage();
-        await deleteUserDetails();
-        navigation.navigate('Login')
-    }
+const Header = ({navigation, title}) => {
     
     return(
         <>
             <View style={styles.parentContainer} >
-                {backButton ? (
-                    <TouchableOpacity onPress={() => navigation.goBack()} >
-                        <Entypo name="chevron-left" size={50} color={TEXT} />
-                    </TouchableOpacity>
-                ) : (
-                    <Image source={require('../assets/Logo.png')} style={styles.logo} />
-                )}
-
-                <View style={{ flexDirection: 'row' }} >
-                    {cameraSwitch ? (
-                        <TouchableOpacity onPress={onClickCameraSwitch} >
-                            <Ionicons name="ios-camera-reverse-outline" size={50} color={TEXT} />
-                        </TouchableOpacity>
-                    ) : null}
-                    <TouchableOpacity onPress={performLogout} style={{marginLeft: 20}} >
-                        <Ionicons name="log-out-outline" size={50} color={TEXT} />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
+                    <Entypo name="chevron-left" size={20} color={TEXT} style={styles.icon} />
+                </TouchableOpacity>
+                <Text style={styles.title} >{title}</Text>
             </View>
         </>
     )
@@ -55,17 +28,24 @@ const Header = ({navigation, backButton, cameraSwitch, onClickCameraSwitch}) => 
 
 const styles = StyleSheet.create({
     parentContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
+        justifyContent: 'center',
         paddingVertical: 10,
-        paddingHorizontal: 20,
-        backgroundColor: BACKGROUND
+        width: SCREEN_WIDTH,
+        flexDirection: 'row',
+        position: 'relative',
     },
-    logo: {
-        height: 45,
-        width: 45,
-    }
+    iconContainer: {
+        position: 'absolute',
+        left: 10,
+    },
+    title: {
+        fontWeight: 'bold',
+        color: TEXT,
+        textAlign: 'center',
+        fontSize: 18
+    },
 })
+
 
 export default Header;

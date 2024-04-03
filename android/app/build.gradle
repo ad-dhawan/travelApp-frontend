@@ -129,6 +129,8 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 

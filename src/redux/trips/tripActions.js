@@ -39,11 +39,9 @@ export const getTodoDetails = createAsyncThunk(
        const { token, userInfo } = getState().authentication
        const URL = `${Endpoints.GET_TODO_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripId=${data.tripId}`;
       try {
-
        let res = await AxiosInstance.get(URL);
        console.log(`getTodoDetails response: ${res.data}`);
        return { response: res.data };
-
       } catch (error) {
          console.log(`getTodoDetails error: `, error)
         if (error.response) {

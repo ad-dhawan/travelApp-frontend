@@ -66,7 +66,7 @@ const Login = ({navigation}) => {
                                 customStyle={{ marginTop: 30, borderColor: BACKGROUND }}
                                 customTextStyle={{ color: TEXT_WHITE }}
                                 placeholderColor={TEXT_WHITE}
-                                leftIcon={<Entypo name="lock" size={20} color={TEXTINPUT_ICON} />}
+                                leftIcon={<Entypo name="user" size={20} color={TEXT_WHITE} />}
                             />
 
                             <AppTextInput
@@ -77,8 +77,8 @@ const Login = ({navigation}) => {
                                 customTextStyle={{ color: TEXT_WHITE }}
                                 placeholderColor={TEXT_WHITE}
                                 secureText={hidePassword}
-                                leftIcon={<Entypo name="lock" size={20} color={TEXTINPUT_ICON} />}
-                                rightIcon={<Entypo name={hidePassword ? 'eye' : 'eye-with-line'} size={20} color={TEXT} />}
+                                leftIcon={<Entypo name="lock" size={20} color={TEXT_WHITE} />}
+                                rightIcon={<Entypo name={hidePassword ? 'eye' : 'eye-with-line'} size={20} color={TEXT_WHITE} />}
                                 onPressRightIcon={() => setHidePassword(!hidePassword)}
                             />
 

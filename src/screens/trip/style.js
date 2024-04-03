@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { BACKGROUND, TEXT, TEXT_WHITE } from "../../utils/colors";
+import { BACKGROUND, PLACEHOLDER_COLOR, TEXT, TEXT_WHITE } from "../../utils/colors";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../utils/values";
 
 const styles = StyleSheet.create({
@@ -82,6 +82,29 @@ const styles = StyleSheet.create({
         color: TEXT,
         marginTop: 10
     },
+
+
+    //TODO
+    todoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+        paddingHorizontal: 5
+    },
+    todoTask: {
+        fontSize: 15,
+        color: TEXT
+    },
+    divider: {
+        height: 1,
+        borderWidth: .5,
+        borderColor: PLACEHOLDER_COLOR
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20
+    }
 })
 
 export default styles;

@@ -11,7 +11,7 @@ import { getTripDetails } from '../../redux/trips/tripActions';
 //COMPONENTS
 import Loading from '../../components/loading';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 
 import styles from './style';
 import { TEXT_WHITE } from '../../utils/colors';
@@ -21,7 +21,7 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../utils/values';
 
 const FILE_NAME = 'upcomingtripscreen.js';
 
-const UpcomingTrips = () => {
+const UpcomingTrips = ({navigation}) => {
     const state = useSelector((state) => state.trip);
 
     const [loading, setLoading] = useState(true);
@@ -33,14 +33,14 @@ const UpcomingTrips = () => {
         seconds: 0,
     });
 
-    const { resetError } = tripSlice.actions;
+    const { resetError, resetState } = tripSlice.actions;
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         console.log(`In ${FILE_NAME}: useEffect`);
 
-        dispatch(resetError());
+        dispatch(resetState());
     }, []);
 
     useEffect(() => {
@@ -78,8 +78,43 @@ const UpcomingTrips = () => {
         }
     }, [tripDetails]);
 
-    const onPressItinerary = () => {
-        console.log("View itinerary pressed");
+    const onPressItem = (mode) => {
+        switch(mode){
+            case 'itinerary': 
+                navigation.push('itinerary', {tripId: tripDetails._id});
+                break;
+
+            case 'todo':
+                navigation.navigate('todo', {tripId: tripDetails._id});
+                break;
+            
+            case 'notes':
+                navigation.push('notes', {tripId: tripDetails._id});
+                break;
+
+            case 'documents':
+                navigation.push('documents', {tripId: tripDetails._id});
+                break;
+
+            case 'list':
+                navigation.push('packingList', {tripId: tripDetails._id});
+                break;
+
+            case 'stay':
+                navigation.push('bookings', {tripId: tripDetails._id});
+                break;
+
+            case 'transport':
+                navigation.push('transport', {tripId: tripDetails._id});
+                break;
+
+            case 'myTrips':
+                navigation.push('myTrips');
+                break;
+
+            default:
+                return null;
+        }
     }
 
     if (loading) return <Loading />;
@@ -98,15 +133,21 @@ const UpcomingTrips = () => {
                                     <Text style={styles.timeLeftText} >Days</Text>
                                 </View>
 
+                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
+
                                 <View style={styles.timeLeftItem} >
                                     <Text style={styles.timeLeft} >{timeLeft.hours}</Text>
                                     <Text style={styles.timeLeftText} >Hours</Text>
                                 </View>
 
+                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
+
                                 <View style={styles.timeLeftItem} >
                                     <Text style={styles.timeLeft} >{timeLeft.minutes}</Text>
                                     <Text style={styles.timeLeftText} >Minutes</Text>
                                 </View>
+
+                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
 
                                 <View style={styles.timeLeftItem} >
                                     <Text style={styles.timeLeft} >{timeLeft.seconds}</Text>
@@ -123,42 +164,42 @@ const UpcomingTrips = () => {
                         />
                     </View>
 
-                    <TouchableOpacity onPress={onPressItinerary} style={styles.viewItineraryContainer} >
+                    <TouchableOpacity onPress={() => onPressItem('itinerary')} style={styles.viewItineraryContainer} >
                         <Text style={styles.viewItineraryText} >View your Itinerary</Text>
-                        <AntDesign name={"arrow-right"} size={20} color={TEXT_WHITE} />
+                        <Feather name={"arrow-right"} size={20} color={TEXT_WHITE} />
                     </TouchableOpacity>
                 </ImageBackground>
 
                 <View style={styles.otherItemsParentContainer} >
-                    <TouchableOpacity style={styles.otherItemsContainer} >
+                    <TouchableOpacity onPress={() => onPressItem('todo')} style={styles.otherItemsContainer} >
                         <Image style={styles.otherItemImage} source={require('../../assets/todo.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >ToDo</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.otherItemsContainer} >
+                    <TouchableOpacity onPress={() => onPressItem('notes')} style={styles.otherItemsContainer} >
                         <Image style={styles.otherItemImage} source={require('../../assets/notes.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >Notes</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.otherItemsContainer} >
+                    <TouchableOpacity onPress={() => onPressItem('list')} style={styles.otherItemsContainer} >
                         <Image style={styles.otherItemImage} source={require('../../assets/list.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >Packing List</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.otherItemsParentContainer} >
-                    <TouchableOpacity style={styles.otherItemsContainer} >
-                        <Image style={styles.otherItemImage} source={require('../../assets/notes.png')} />
+                    <TouchableOpacity onPress={() => onPressItem('documents')} style={styles.otherItemsContainer} >
+                        <Image style={styles.otherItemImage} source={require('../../assets/documents.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >Documents</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity style={styles.otherItemsContainer} >
-                        <Image style={styles.otherItemImage} source={require('../../assets/todo.png')} />
+                    <TouchableOpacity onPress={() => onPressItem('stay')} style={styles.otherItemsContainer} >
+                        <Image style={styles.otherItemImage} source={require('../../assets/stay.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >Stay</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity style={styles.otherItemsContainer} >
-                        <Image style={styles.otherItemImage} source={require('../../assets/list.png')} />
+                    <TouchableOpacity onPress={() => onPressItem('transport')} style={styles.otherItemsContainer} >
+                        <Image style={styles.otherItemImage} source={require('../../assets/transport.png')} />
                         <Text style={styles.otherItemText} numberOfLines={1} ellipsizeMode="tail" >Transport</Text>
                     </TouchableOpacity>
                 </View>
