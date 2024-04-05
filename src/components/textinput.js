@@ -28,7 +28,8 @@ const AppTextInput = ({
   placeholderColor = PLACEHOLDER_COLOR,
   maxLength = null,
   keyboardType = 'default',
-  editable = true
+  editable = true,
+  props
 }) => {
   const renderLeftIcon = () => {
     if (leftIcon) {

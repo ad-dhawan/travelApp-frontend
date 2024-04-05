@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {  
   getTripDetails,
+  createTodoDetails,
   getTodoDetails,
+  editTodoDetails,
+  deleteTodoDetails,
+  createPackingListDetails,
   getPackingListDetails,
+  editListItemDetails,
+  deleteListItemDetails,
+  createNoteDetails,
   getNoteDetails,
+  deleteNoteDetails,
   getDocumentDetails
 } from "./tripActions";
 
@@ -37,6 +45,14 @@ export const tripSlice = createSlice({
     resetState: (state) => {
       Object.assign(state, initialState);
     },
+    resetObjectState: (state, action) => {
+      const objectName = action.payload;
+      if (state.hasOwnProperty(objectName)) {
+        state[objectName] = initialState[objectName];
+      } else {
+        console.error(`Object '${objectName}' does not exist in the state.`);
+      }
+    },
   },
    extraReducers: (builder) => {
      builder.addCase(getTripDetails.pending, (state) => {
@@ -49,6 +65,24 @@ export const tripSlice = createSlice({
        state.tripDetails = payload?.response?.trips;
      });
      builder.addCase(getTripDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(createTodoDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(createTodoDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.todoDetails = payload?.response?.todos;
+     });
+     builder.addCase(createTodoDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;
@@ -75,6 +109,58 @@ export const tripSlice = createSlice({
      });
 
 
+     builder.addCase(editTodoDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(editTodoDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(editTodoDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(deleteTodoDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteTodoDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteTodoDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(createPackingListDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(createPackingListDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.listDetails = payload?.response?.list;
+     });
+     builder.addCase(createPackingListDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
      builder.addCase(getPackingListDetails.pending, (state) => {
        state.loading = true;
      });
@@ -85,6 +171,58 @@ export const tripSlice = createSlice({
        state.listDetails = payload?.response?.list;
      });
      builder.addCase(getPackingListDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(editListItemDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(editListItemDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(editListItemDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(deleteListItemDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteListItemDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteListItemDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(createNoteDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(createNoteDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.noteDetails = payload?.response?.notes;
+     });
+     builder.addCase(createNoteDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;
@@ -111,6 +249,23 @@ export const tripSlice = createSlice({
      });
 
 
+     builder.addCase(deleteNoteDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteNoteDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteNoteDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
      builder.addCase(getDocumentDetails.pending, (state) => {
        state.loading = true;
      });
@@ -118,7 +273,7 @@ export const tripSlice = createSlice({
        console.log(payload);
        state.loading = false;
        state.success = true;
-       state.noteDetails = payload?.response?.notes;
+       state.documentDetails = payload?.response?.list;
      });
      builder.addCase(getDocumentDetails.rejected, (state, { payload }) => {
        console.log(payload);

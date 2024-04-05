@@ -5,7 +5,7 @@ import { Checkbox } from 'react-native-paper';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 //FUNCTIONS
-import { getTodoDetails } from '../../redux/trips/tripActions';
+import { getTodoDetails, editTodoDetails, deleteTodoDetails, createTodoDetails } from '../../redux/trips/tripActions';
 import { tripSlice } from '../../redux/trips/tripSlice';
 
 //COMPONENTS
@@ -15,8 +15,9 @@ import AppButton from '../../components/button';
 import AppTextInput from '../../components/textinput';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
-import { PRIMARY_BRAND_1, PRIMARY_BRAND_2 } from '../../utils/colors';
+import { PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT } from '../../utils/colors';
 
 //CONSTANTS
 const FILE_NAME = 'todoscreen.js'
@@ -25,7 +26,7 @@ const Todo = ({ navigation }) => {
     const { tripId } = navigation.state.params;
     const state = useSelector((state) => state.trip);
     const dispatch = useDispatch();
-    const { resetError } = tripSlice.actions;
+    const { resetError, resetObjectState } = tripSlice.actions;
 
 
     const bottomSheetRef = useRef();
@@ -36,6 +37,7 @@ const Todo = ({ navigation }) => {
     useEffect(() => {
         console.log(`In ${FILE_NAME}: useEffect`);
 
+        dispatch(resetObjectState('todoDetails'));
         dispatch(resetError());
     }, []);
 
@@ -48,21 +50,44 @@ const Todo = ({ navigation }) => {
         }
     }, [state.todoDetails]);
 
-    const handleCheckboxPress = (index) => {
+    const handleCheckboxPress = (index, item) => {
         const updatedTodoDetails = [...todoDetails];
         updatedTodoDetails[index].status = !updatedTodoDetails[index].status;
         setTodoDetails(updatedTodoDetails);
+
+        dispatch(editTodoDetails({
+            todoId: item._id,
+            tripId: tripId,
+            status: updatedTodoDetails[index].status
+        }))
     };
+
+    const onPressDeleteTodo = (todoId) => {
+        const updatedTodoDetails = todoDetails.filter(todo => todo._id !== todoId);
+        setTodoDetails(updatedTodoDetails);
+
+        dispatch(deleteTodoDetails({
+            todoId: todoId,
+            tripId: tripId,
+        }))
+    };
+    
 
     const renderTodoItem = ({ item, index }) => {
         return (
             <>
                 <View style={styles.todoContainer}>
-                    <Checkbox
-                        status={item.status ? 'checked' : 'unchecked'}
-                        onPress={() => handleCheckboxPress(index)}
-                    />
-                    <Text style={styles.todoTask} numberOfLines={1} ellipsizeMode="tail">{item.task}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}} >
+                        <Checkbox
+                            status={item.status ? 'checked' : 'unchecked'}
+                            onPress={() => handleCheckboxPress(index, item)}
+                        />
+                        <Text style={styles.todoTask} numberOfLines={1} ellipsizeMode="tail">{item.task}</Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => onPressDeleteTodo(item._id)} >
+                        <MaterialCommunityIcons name={'delete'} size={20} color={TEXT} />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.divider} />
             </>
@@ -75,9 +100,13 @@ const Todo = ({ navigation }) => {
     }
 
     const addNewTodo = () => {
-        //add login to add new task 
-        setNewTodoTask('');
+        dispatch(createTodoDetails({
+            task: newTodoTask,
+            tripId: tripId
+        }));
+
         bottomSheetRef.current.close();
+        setNewTodoTask('');
     };
 
     if (loading) return <Loading />;

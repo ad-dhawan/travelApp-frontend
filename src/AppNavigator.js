@@ -21,6 +21,7 @@ import Notes from './screens/trip/notescreen';
 import PackingList from './screens/trip/packinglistscreen';
 import Todo from './screens/trip/todoscreen';
 import Transport from './screens/trip/transportscreen';
+import PdfViewer from './screens/trip/pdfviewer';
 
 export function createAppNavigator(routes) {
   const AppNavigator = createStackNavigator(routes, {
@@ -46,6 +47,7 @@ const routes = {
   packingList: { screen: PackingList },
   todo: { screen: Todo },
   transport: { screen: Transport },
+  pdfViewer: { screen: PdfViewer }
 };
 
 export default createAppNavigator(routes);

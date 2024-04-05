@@ -1,6 +1,7 @@
 //theme
 export const PRIMARY_BRAND_1 = '#636363';
 export const PRIMARY_BRAND_2 = '#3FA147';
+export const PRIMARY_BRAND_2_OVERLAY = '#3FA14740';
 export const ERROR = '#F93232';
 
 //components

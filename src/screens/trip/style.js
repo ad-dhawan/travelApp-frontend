@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { BACKGROUND, PLACEHOLDER_COLOR, TEXT, TEXT_WHITE } from "../../utils/colors";
+import { BACKGROUND, PLACEHOLDER_COLOR, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../utils/values";
 
 const styles = StyleSheet.create({
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,
-        paddingHorizontal: 5
+        paddingHorizontal: 10,
+        justifyContent: 'space-between'
     },
     todoTask: {
         fontSize: 15,
@@ -104,7 +105,25 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         right: 20
-    }
+    },
+
+
+    //DOCUMENT
+    documentContainer: {
+        padding: 10,
+        backgroundColor: PRIMARY_BRAND_2_OVERLAY,
+        borderRadius: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: 5,
+        marginHorizontal: 10
+    },
+    documentExtension: {
+        fontSize: 12,
+        color: TEXTINPUT_ICON,
+        marginLeft: 20
+    },
 })
 
 export default styles;
