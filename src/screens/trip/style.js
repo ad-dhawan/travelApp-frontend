@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { BACKGROUND, PLACEHOLDER_COLOR, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
+import { BACKGROUND, BACKGROUND_OVERLAY, PLACEHOLDER_COLOR, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../utils/values";
 
 const styles = StyleSheet.create({
@@ -123,6 +123,44 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: TEXTINPUT_ICON,
         marginLeft: 20
+    },
+
+
+    //BOOKING
+    bookingContainer: {
+        padding: 15,
+        backgroundColor: PRIMARY_BRAND_2_OVERLAY,
+        borderRadius: 8,
+        margin: 10
+    },
+    addressContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    bookingTitle: {
+        fontSize: 15,
+        color: TEXT,
+        fontWeight: 'bold'
+    },
+    bookingAddress: {
+        fontSize: 12,
+        color: TEXT,
+        maxWidth: '90%'
+    },
+    bookingNumberContainer: {
+        marginVertical: 15
+    },
+    bookingDateContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    bookingHeading: {
+        fontSize: 10,
+        color: BACKGROUND_OVERLAY
+    },
+    bookingDetail: {
+        fontSize: 12,
+        color: TEXT
     },
 })
 

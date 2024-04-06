@@ -5,7 +5,7 @@ import { Checkbox } from 'react-native-paper';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 //FUNCTIONS
-import { getDocumentDetails } from '../../redux/trips/tripActions';
+import { getDocumentDetails, deleteDocumentDetails } from '../../redux/trips/tripActions';
 import { tripSlice } from '../../redux/trips/tripSlice';
 
 //COMPONENTS
@@ -54,10 +54,10 @@ const Documents = ({ navigation }) => {
         const updatedDocumentDetails = documentDetails.filter(todo => todo._id !== documentId);
         setDocumentDetails(updatedDocumentDetails);
 
-        // dispatch(deleteNoteDetails({
-        //     documentId: documentId,
-        //     tripId: tripId,
-        // }))
+        dispatch(deleteDocumentDetails({
+            documentId: documentId,
+            tripId: tripId,
+        }))
     };
 
     const renderDocument = ({ item, index }) => {

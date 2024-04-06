@@ -12,7 +12,10 @@ import {
   createNoteDetails,
   getNoteDetails,
   deleteNoteDetails,
-  getDocumentDetails
+  getDocumentDetails,
+  deleteDocumentDetails,
+  getBookingDetails,
+  deleteBookingDetails
 } from "./tripActions";
 
 const initialState = {
@@ -276,6 +279,58 @@ export const tripSlice = createSlice({
        state.documentDetails = payload?.response?.list;
      });
      builder.addCase(getDocumentDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(deleteDocumentDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteDocumentDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteDocumentDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(getBookingDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(getBookingDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.bookingDetails = payload?.response?.list;
+     });
+     builder.addCase(getBookingDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(deleteBookingDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteBookingDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteBookingDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;

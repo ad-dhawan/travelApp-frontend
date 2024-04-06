@@ -415,6 +415,40 @@ export const getDocumentDetails = createAsyncThunk(
     }
 );
 
+export const deleteDocumentDetails = createAsyncThunk(
+    "deleteDocumentDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_DOCUMENT_DETAILS}/${data.tripId}/${data.documentId}`;
+       const config = {
+        headers: {
+          authToken: token,
+          userId: userInfo._id
+        }
+      };
+       
+      try {
+       let res = await AxiosInstance.delete(URL, config);
+       console.log(`deleteDocumentDetails response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`deleteDocumentDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
+
 export const getBookingDetails = createAsyncThunk(
     "getBookingDetails",
     async (data, { rejectWithValue, getState }) => {
@@ -428,6 +462,40 @@ export const getBookingDetails = createAsyncThunk(
 
       } catch (error) {
          console.log(`getBookingDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
+
+export const deleteBookingDetails = createAsyncThunk(
+    "deleteBookingDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_BOOKING_DETAILS}/${data.tripId}/${data.bookingId}`;
+       const config = {
+        headers: {
+          authToken: token,
+          userId: userInfo._id
+        }
+      };
+       
+      try {
+       let res = await AxiosInstance.delete(URL, config);
+       console.log(`deleteBookingDetails response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`deleteBookingDetails error: `, error)
         if (error.response) {
           return rejectWithValue({
             status: error.response.status,
