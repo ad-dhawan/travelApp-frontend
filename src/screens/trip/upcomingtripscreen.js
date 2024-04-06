@@ -10,6 +10,7 @@ import { getTripDetails } from '../../redux/trips/tripActions';
 
 //COMPONENTS
 import Loading from '../../components/loading';
+import OnboardingScreen from '../../components/onboarding';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -118,6 +119,8 @@ const UpcomingTrips = ({navigation}) => {
     }
 
     if (loading) return <Loading />;
+
+    if(state.tripDetails.length === 0) return <OnboardingScreen />
 
     return (
         <>

@@ -1,19 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {  
   getTripDetails,
+
   createTodoDetails,
   getTodoDetails,
   editTodoDetails,
   deleteTodoDetails,
+
   createPackingListDetails,
   getPackingListDetails,
   editListItemDetails,
   deleteListItemDetails,
+
   createNoteDetails,
   getNoteDetails,
   deleteNoteDetails,
+
+  createDocumentDetails,
   getDocumentDetails,
   deleteDocumentDetails,
+
   getBookingDetails,
   deleteBookingDetails
 } from "./tripActions";
@@ -261,6 +267,24 @@ export const tripSlice = createSlice({
        state.success = true;
      });
      builder.addCase(deleteNoteDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(createDocumentDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(createDocumentDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.documentDetails = payload?.response?.list;
+     });
+     builder.addCase(createDocumentDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;

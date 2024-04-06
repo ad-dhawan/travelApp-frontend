@@ -386,6 +386,41 @@ export const deleteNoteDetails = createAsyncThunk(
     }
 );
 
+export const createDocumentDetails = createAsyncThunk(
+    "createDocumentDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_DOCUMENT_DETAILS}`;
+       const body = {
+        title: data.title,
+        base64: data.base64,
+        extension: data.extension,
+        tripId: data.tripId,
+        authToken: token,
+        userId: userInfo._id
+       }
+      try {
+       let res = await AxiosInstance.post(URL, body);
+       console.log(`createDocumentDetails response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`createDocumentDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
+
 export const getDocumentDetails = createAsyncThunk(
     "getDocumentDetails",
     async (data, { rejectWithValue, getState }) => {
