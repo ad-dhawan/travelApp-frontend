@@ -21,7 +21,9 @@ import {
   deleteDocumentDetails,
 
   getBookingDetails,
-  deleteBookingDetails
+  deleteBookingDetails,
+
+  getItineraryDetails
 } from "./tripActions";
 
 const initialState = {
@@ -355,6 +357,24 @@ export const tripSlice = createSlice({
        state.success = true;
      });
      builder.addCase(deleteBookingDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(getItineraryDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(getItineraryDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+       state.itineraryDetails = payload?.response?.itinerary;
+     });
+     builder.addCase(getItineraryDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ImageBackground, Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 //functions
@@ -39,6 +39,36 @@ const Login = ({navigation}) => {
 
         dispatch(googlesignin());
     }
+
+    useEffect(() => {
+      const handleDeepLink = ({ url }) => {
+        if (url) {
+            console.log("url is: ", url)
+          if (url.startsWith('travelapp://auth')) {
+            // Parse the URL to extract parameters
+            const params = parseDeepLinkParams(url);
+            // Navigate to the login screen with parameters
+            console.log("deeplink params: ",params);
+          }
+        }
+      };
+  
+      Linking.addEventListener('url', handleDeepLink);
+  
+      return () => {
+        Linking.removeEventListener('url', handleDeepLink);
+      };
+    }, []);
+
+    const parseDeepLinkParams = (url) => {
+        const query = url.split('?')[1];
+        const params = {};
+        query.split('&').forEach((param) => {
+        const [key, value] = param.split('=');
+        params[key] = value;
+        });
+        return params;
+    };
 
     const onPressLogin = () => {
         console.log('In onPressLogin');

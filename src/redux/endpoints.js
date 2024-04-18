@@ -8,3 +8,4 @@ export const GET_PACKING_LIST_DETAILS = "/trip/list";
 export const GET_NOTE_DETAILS = "/trip/note";
 export const GET_DOCUMENT_DETAILS = "/trip/document";
 export const GET_BOOKING_DETAILS = "/trip/booking";
+export const GET_ITINERARY_DETAILS = "/trip/itinerary";

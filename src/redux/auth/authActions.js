@@ -12,9 +12,9 @@ export const googlesignin = createAsyncThunk(
 
         let res = await AxiosInstance.get(URL);
         console.log(`googlesignin response: ${res.data}`);
-        // return { response: res.data };
-
         await Linking.openURL(res.data)
+        return { response: res.data };
+
 
        } catch (error) {
           console.log(`Google SignIn error: `, error)

@@ -119,8 +119,11 @@ const UpcomingTrips = ({navigation}) => {
     }
 
     if (loading) return <Loading />;
-
     if(state.tripDetails.length === 0) return <OnboardingScreen />
+    if(tripDetails.end_date < moment().unix()) {
+        navigation.navigate('myTrips');
+        return;
+    }
 
     return (
         <>
@@ -129,35 +132,35 @@ const UpcomingTrips = ({navigation}) => {
                     <View style={styles.headerContainer}>
                         <Text style={styles.tripTitle} >{tripDetails.title}</Text>
 
-                        {timeLeft.days !== 0 && timeLeft.hours !== 0 && timeLeft.minutes !== 0 && timeLeft.seconds !== 0 && (
+                        {/* {timeLeft.days !== 0 && timeLeft.hours !== 0 && timeLeft.minutes !== 0 && timeLeft.seconds !== 0 && ( */}
                             <View style={styles.timeLeftContainer} >
                                 <View style={styles.timeLeftItem} >
-                                    <Text style={styles.timeLeft} >{timeLeft.days}</Text>
+                                    <Text style={styles.timeLeft} >{timeLeft.days <= 0 ? '00' : timeLeft.days}</Text>
                                     <Text style={styles.timeLeftText} >Days</Text>
                                 </View>
 
-                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
+                                <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text>
 
                                 <View style={styles.timeLeftItem} >
-                                    <Text style={styles.timeLeft} >{timeLeft.hours}</Text>
+                                    <Text style={styles.timeLeft} >{timeLeft.hours <= 0 ? '00' : timeLeft.hours}</Text>
                                     <Text style={styles.timeLeftText} >Hours</Text>
                                 </View>
 
-                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
+                                <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text>
 
                                 <View style={styles.timeLeftItem} >
-                                    <Text style={styles.timeLeft} >{timeLeft.minutes}</Text>
+                                    <Text style={styles.timeLeft} >{timeLeft.minutes <= 0 ? '00' : timeLeft.minutes}</Text>
                                     <Text style={styles.timeLeftText} >Minutes</Text>
                                 </View>
 
-                                {/* <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text> */}
+                                <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text>
 
                                 <View style={styles.timeLeftItem} >
-                                    <Text style={styles.timeLeft} >{timeLeft.seconds}</Text>
+                                    <Text style={styles.timeLeft} >{timeLeft.seconds <= 0 ? '00' : timeLeft.seconds}</Text>
                                     <Text style={styles.timeLeftText} >Seconds</Text>
                                 </View>
                             </View>
-                        )}
+                        {/* )} */}
 
                         <LottieView
                             style={styles.upcomingAnimation}

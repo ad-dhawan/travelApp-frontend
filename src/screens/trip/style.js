@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { BACKGROUND, BACKGROUND_OVERLAY, PLACEHOLDER_COLOR, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
+import { BACKGROUND, BACKGROUND_OVERLAY, PLACEHOLDER_COLOR, PRIMARY_BRAND_2, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../utils/values";
 
 const styles = StyleSheet.create({
@@ -160,6 +160,136 @@ const styles = StyleSheet.create({
     },
     bookingDetail: {
         fontSize: 12,
+        color: TEXT
+    },
+
+
+    //ITINERARY
+    itineraryDateTab: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 6,
+        backgroundColor: PRIMARY_BRAND_2_OVERLAY,
+        padding: 12,
+        paddingVertical: 12,
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: PRIMARY_BRAND_2_OVERLAY
+    },
+    itineraryDateSelectedTab: {
+        backgroundColor: BACKGROUND,
+        borderWidth: 2,
+        borderColor: PRIMARY_BRAND_2
+    },
+    itineraryDateText: {
+        color: TEXT,
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+    itineraryDayText: {
+        fontSize: 12,
+        color: TEXT
+    },
+    itineraryDayNumberText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: TEXT
+    },
+    parentContainer: {
+        margin: 10,
+        borderWidth: 1,
+        borderColor: PRIMARY_BRAND_2_OVERLAY,
+        borderRadius: 10,
+        flexDirection: 'row'
+    },
+    itineraryThumbnail: {
+        width: 80,
+        height: 80,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
+    },
+    itineraryDetailsContainer: {
+        marginLeft: 5,
+        padding: 4
+    },
+    itineraryTitle: {
+        fontSize: 14,
+        color: TEXT,
+        fontWeight: 'bold'
+    },
+    itineraryTime: {
+        fontSize: 11,
+        color: BACKGROUND_OVERLAY
+    },
+    itineraryDescription: {
+        marginVertical: 10,
+        color: BACKGROUND_OVERLAY,
+        fontSize: 12,
+        maxWidth: '90%',
+        flexWrap: 'wrap'
+    },
+    noItineraryContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        marginHorizontal: 30,
+    },
+    noItineraryImage: {
+        height: SCREEN_WIDTH / 3,
+        width: SCREEN_WIDTH / 3
+    },
+    noItineraryHeading: {
+        color: TEXT,
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 40,
+        marginBottom: 10
+    },
+    noItineraryText: {
+        color: TEXT,
+        fontSize: 15,
+        textAlign: 'center',
+    },
+
+
+
+    //MY TRIPS
+    pastTripsParentContainer: {
+        padding: 20,
+    },
+    pastTripsHeading: {
+        fontSize: 15,
+        color: TEXT,
+        fontWeight: 'bold'
+    },
+    pastTripsItemParentContainer: {
+        borderRadius: 10,
+        borderColor: PLACEHOLDER_COLOR,
+        borderWidth: 1,
+        flexDirection: 'row',
+        marginTop: 10
+    },
+    pastTripsItemImage: {
+        width: 100,
+        height: 100,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
+    },
+    pastTripsItemDetailsContainer:{
+        marginLeft: 10,
+        justifyContent: 'space-between',
+        paddingVertical: 10
+    },
+    pastTripsItemTitle: {
+        fontSize: 16,
+        color: TEXT,
+        fontWeight: 'bold'
+    },
+    pastTripsItemDescription: {
+        fontSize: 12,
+        color: TEXTINPUT_ICON
+    },
+    pastTripsItemDate: {
         color: TEXT
     },
 })

@@ -10,7 +10,7 @@ export const getTripDetails = createAsyncThunk(
      "getTripDetails",
      async (data, { rejectWithValue, getState }) => {
       console.log(`In ${FILE_NAME}: getTripDetails`)
-        const { token, userInfo } = getState().authentication
+        const { token, userInfo } = getState().authentication;
         const URL = `${Endpoints.GET_TRIP_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripIds=${userInfo.trips.join(',')}`;
        try {
 
@@ -531,6 +531,35 @@ export const deleteBookingDetails = createAsyncThunk(
        return { response: res.data };
       } catch (error) {
          console.log(`deleteBookingDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
+
+export const getItineraryDetails = createAsyncThunk(
+    "getItineraryDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_ITINERARY_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripId=${data.tripId}`;
+      try {
+
+       let res = await AxiosInstance.get(URL);
+       console.log(`getItineraryDetails response: ${res.data}`);
+       return { response: res.data };
+
+      } catch (error) {
+         console.log(`getItineraryDetails error: `, error)
         if (error.response) {
           return rejectWithValue({
             status: error.response.status,
