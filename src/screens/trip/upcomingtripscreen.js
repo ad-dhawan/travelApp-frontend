@@ -46,13 +46,18 @@ const UpcomingTrips = ({navigation}) => {
 
     useEffect(() => {
         if (state.tripDetails.length !== 0) {
-            // Find the trip with the smallest start_date
-            const smallestStartDateTrip = state.tripDetails.reduce(
-                (min, trip) => (trip.start_date < min.start_date ? trip : min),
-                state.tripDetails[0]
-            );
+            // Find the trip with the smallest end_date
+            const smallestEndDateTrip = state.tripDetails.reduce((min, trip) => {
+                if (trip.end_date < moment().unix()) {
+                    return min;
+                }
+                if (!min || trip.end_date < min.end_date) {
+                    return trip;
+                }
+                return min;
+            }, null);
 
-            setTripDetails(smallestStartDateTrip);
+            setTripDetails(smallestEndDateTrip);
             setLoading(false);
         } else {
             dispatch(getTripDetails());
@@ -119,7 +124,7 @@ const UpcomingTrips = ({navigation}) => {
     }
 
     if (loading) return <Loading />;
-    if(state.tripDetails.length === 0) return <OnboardingScreen />
+    if(state.tripDetails && state.tripDetails.length === 0) return <OnboardingScreen />
     if(tripDetails.end_date < moment().unix()) {
         navigation.navigate('myTrips');
         return;

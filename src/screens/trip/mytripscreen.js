@@ -48,6 +48,7 @@ const MyTrips = () => {
     }, [state.tripDetails]);
 
     if (loading) return <Loading />;
+    if(trips.length === 0) return <OnboardingScreen />
 
     const renderTrips = ({ item, index }) => {
         return(

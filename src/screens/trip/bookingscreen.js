@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
 import { PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT } from '../../utils/colors';
+import emptylistcomponent from './emptylistcomponent';
 
 //CONSTANTS
 const FILE_NAME = 'documentscreen.js'
@@ -42,8 +43,8 @@ const Bookings = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.bookingDetails && state.bookingDetails.length !== 0) {
-            setBookingDetails(state.bookingDetails[0].bookings);
+        if (state.bookingDetails) {
+            setBookingDetails(state.bookingDetails[0]?.bookings);
             setLoading(false);
         } else {
             dispatch(getBookingDetails({ tripId }));
@@ -127,6 +128,7 @@ const Bookings = ({ navigation }) => {
                     data={bookingDetails}
                     renderItem={renderBooking}
                     keyExtractor={(item) => item._id}
+                    ListEmptyComponent={emptylistcomponent}
                 />
             </ScrollView>
 

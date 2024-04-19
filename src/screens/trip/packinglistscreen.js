@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
 import { PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT } from '../../utils/colors';
+import emptylistcomponent from './emptylistcomponent';
 
 //CONSTANTS
 const FILE_NAME = 'packinglistscreen.js'
@@ -42,8 +43,8 @@ const PackingList = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.listDetails.length !== 0) {
-            setListDetails(state.listDetails[0].list);
+        if (state.listDetails) {
+            setListDetails(state.listDetails[0]?.list);
             setLoading(false);
         } else {
             dispatch(getPackingListDetails({ tripId }));
@@ -119,6 +120,7 @@ const PackingList = ({ navigation }) => {
                     data={listDetails}
                     renderItem={renderListItem}
                     keyExtractor={(item) => item._id}
+                    ListEmptyComponent={emptylistcomponent}
                 />
             </ScrollView>
 

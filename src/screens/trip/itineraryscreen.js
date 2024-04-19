@@ -43,8 +43,8 @@ const Itinerary = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.itineraryDetails.length !== 0) {
-            setItineraryDetails(state.itineraryDetails[0].list);
+        if (state.itineraryDetails) {
+            setItineraryDetails(state.itineraryDetails[0]?.list);
             setLoading(false);
         } else {
             dispatch(getItineraryDetails({ tripId }));
@@ -58,13 +58,14 @@ const Itinerary = ({ navigation }) => {
         }
     }, [itineraryDetails]);
 
-    const renderTab = ({ item }) => (
+    const renderTab = ({ item, index }) => (
         <TouchableOpacity
             style={[styles.itineraryDateTab, selectedTab === item._id && styles.itineraryDateSelectedTab]}
             onPress={() => setSelectedTab(item._id)}
         >
             <Text style={styles.itineraryDayText}>Day</Text>
-            <Text style={styles.itineraryDayNumberText}>{moment.unix(item.date).format('DD')}</Text>
+            {/* <Text style={styles.itineraryDayNumberText}>{moment.unix(item.date).format('DD')}</Text> */}
+            <Text style={styles.itineraryDayNumberText}>{index}</Text>
         </TouchableOpacity>
     );
 

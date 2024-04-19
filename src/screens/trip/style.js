@@ -292,6 +292,30 @@ const styles = StyleSheet.create({
     pastTripsItemDate: {
         color: TEXT
     },
+
+
+    //EMPTY LIST
+    emptyListComponentContainer: {
+        flex: 1,
+        height: SCREEN_HEIGHT,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    emptyListComponentImage: {
+        width: 100,
+        height: 100,
+    },
+    emptyListComponentHeading: {
+        color: TEXT,
+        fontSize: 18,
+        marginBottom: 10,
+        marginTop: 40,
+        fontWeight: 'bold'
+    },
+    emptyListComponentText: {
+        color: TEXT,
+        fontSize: 16,
+    },
 })
 
 export default styles;

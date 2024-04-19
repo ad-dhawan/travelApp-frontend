@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
 import { PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT } from '../../utils/colors';
+import emptylistcomponent from './emptylistcomponent';
 
 //CONSTANTS
 const FILE_NAME = 'notescreen.js'
@@ -42,8 +43,8 @@ const Notes = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.noteDetails && state.noteDetails.length !== 0) {
-            setNoteDetails(state.noteDetails[0].notes);
+        if (state.noteDetails) {
+            setNoteDetails(state.noteDetails[0]?.notes);
             setLoading(false);
         } else {
             dispatch(getNoteDetails({ tripId }));
@@ -101,6 +102,7 @@ const Notes = ({ navigation }) => {
                     data={noteDetails}
                     renderItem={renderTodoItem}
                     keyExtractor={(item) => item._id}
+                    ListEmptyComponent={emptylistcomponent}
                 />
             </ScrollView>
 

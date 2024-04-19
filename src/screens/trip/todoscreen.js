@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, FlatList, ScrollView, TouchableOpacity, TextInput, Button } from 'react-native';
+import { View, Text, FlatList, ScrollView, TouchableOpacity, TextInput, Button, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Checkbox } from 'react-native-paper';
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
 import { PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT } from '../../utils/colors';
+import emptylistcomponent from './emptylistcomponent';
 
 //CONSTANTS
 const FILE_NAME = 'todoscreen.js'
@@ -42,8 +43,8 @@ const Todo = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.todoDetails.length !== 0) {
-            setTodoDetails(state.todoDetails[0].todos);
+        if (state.todoDetails) {
+            setTodoDetails(state.todoDetails[0]?.todos);
             setLoading(false);
         } else {
             dispatch(getTodoDetails({ tripId }));
@@ -120,6 +121,7 @@ const Todo = ({ navigation }) => {
                     data={todoDetails}
                     renderItem={renderTodoItem}
                     keyExtractor={(item) => item._id}
+                    ListEmptyComponent={emptylistcomponent}
                 />
             </ScrollView>
 

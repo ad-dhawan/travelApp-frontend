@@ -20,6 +20,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styles from './style';
 import { BACKGROUND_OVERLAY, PRIMARY_BRAND_1, PRIMARY_BRAND_2, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_UNFOCUSED } from '../../utils/colors';
+import emptylistcomponent from './emptylistcomponent';
 
 
 //CONSTANTS
@@ -45,8 +46,8 @@ const Documents = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (state.documentDetails && state.documentDetails.length !== 0) {
-            setDocumentDetails(state.documentDetails[0].documents);
+        if (state.documentDetails) {
+            setDocumentDetails(state.documentDetails[0]?.documents);
             setLoading(false);
         } else {
             dispatch(getDocumentDetails({ tripId }));
@@ -118,6 +119,7 @@ const Documents = ({ navigation }) => {
                     data={documentDetails}
                     renderItem={renderDocument}
                     keyExtractor={(item) => item._id}
+                    ListEmptyComponent={emptylistcomponent}
                 />
             </ScrollView>
 
