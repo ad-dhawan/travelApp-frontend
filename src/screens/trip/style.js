@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { BACKGROUND, BACKGROUND_OVERLAY, PLACEHOLDER_COLOR, PRIMARY_BRAND_2, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXT_WHITE } from "../../utils/colors";
+import { BACKGROUND, BACKGROUND_OVERLAY, ERROR, PLACEHOLDER_COLOR, PRIMARY_BRAND_2, PRIMARY_BRAND_2_OVERLAY, TEXT, TEXTINPUT_FOCUSED, TEXTINPUT_ICON, TEXTINPUT_UNFOCUSED, TEXT_WHITE } from "../../utils/colors";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../utils/values";
 
 const styles = StyleSheet.create({
@@ -20,10 +20,23 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
 
+    tripTitleDateContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        marginBottom: 40
+    },
     tripTitle: {
-        paddingHorizontal: 10,
-        marginBottom: 40,
+        // paddingHorizontal: 10,
         fontSize: 22,
+        color: TEXT,
+        fontWeight: 'bold'
+    },
+    tripDate: {
+        // paddingHorizontal: 10,
+        // marginBottom: 40,
+        fontSize: 14,
         color: TEXT
     },
 
@@ -291,6 +304,53 @@ const styles = StyleSheet.create({
     },
     pastTripsItemDate: {
         color: TEXT
+    },
+
+
+
+    //CREATE TRIP
+    createTripParentContainer: {
+        padding: 20
+    },
+    createTripTextInput: {
+        marginBottom: 15,
+        textAlignVertical: 'top'
+    },
+    createTripImagePickContainer: {
+        borderWidth: 1,
+        borderColor: TEXTINPUT_UNFOCUSED,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 150
+    },
+    createTripImage: {
+        borderRadius: 10,
+        flex: 1,
+        height: '100%',
+        width: '100%'
+    },
+    createTripCoverImageText: {
+        fontSize: 12,
+        color: TEXTINPUT_UNFOCUSED,
+        marginTop: 4
+    },
+
+
+    //EDIT TRIP
+    deleteTripContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+    },
+    deleteTripText: {
+        fontSize: 15,
+        marginLeft: 5,
+        color: ERROR,
     },
 
 

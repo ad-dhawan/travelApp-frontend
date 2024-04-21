@@ -4,14 +4,57 @@ import { Linking } from "react-native";
 import { AxiosInstance } from "../../services/AxiosInstance";
 import * as Endpoints from '../endpoints';
 
-const FILE_NAME = 'tripActions.js'
+const FILE_NAME = 'tripActions.js';
+
+export const createNewTrip = createAsyncThunk(
+    "createNewTrip",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_TRIP_DETAILS}`;
+       const body = {
+        title: data.title,
+        description: data.description,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        coverImage: data.image,
+        authToken: token,
+        userId: userInfo._id
+       }
+      try {
+       let res = await AxiosInstance.post(URL, body);
+       console.log(`createNewTrip response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`createNewTrip error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
 
 export const getTripDetails = createAsyncThunk(
      "getTripDetails",
      async (data, { rejectWithValue, getState }) => {
       console.log(`In ${FILE_NAME}: getTripDetails`)
         const { token, userInfo } = getState().authentication;
-        const URL = `${Endpoints.GET_TRIP_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripIds=${userInfo.trips.join(',')}`;
+
+        let URL;
+        if(data && data.tripId){
+          URL = `${Endpoints.GET_TRIP_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripIds=${data.tripId}`;
+        } else {
+          URL = `${Endpoints.GET_TRIP_DETAILS}?userId=${userInfo._id}&authToken=${token}&tripIds=${userInfo.trips.join(',')}`;
+        }
+
        try {
 
         let res = await AxiosInstance.get(URL);
@@ -34,6 +77,76 @@ export const getTripDetails = createAsyncThunk(
 
        }
      }
+);
+
+export const editTripDetails = createAsyncThunk(
+    "editTripDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_TRIP_DETAILS}/${data.tripId}`;
+       const body = {
+        title: data.title,
+        description: data.description,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        coverImage: data.image,
+        authToken: token,
+        userId: userInfo._id
+       }
+      try {
+       let res = await AxiosInstance.put(URL, body);
+       console.log(`editTripDetails response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`editTripDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
+);
+
+export const deleteTripDetails = createAsyncThunk(
+    "deleteTripDetails",
+    async (data, { rejectWithValue, getState }) => {
+       const { token, userInfo } = getState().authentication
+       const URL = `${Endpoints.GET_TRIP_DETAILS}/${data.tripId}`;
+       const config = {
+        headers: {
+          authToken: token,
+          userId: userInfo._id
+        }
+      };
+       
+      try {
+       let res = await AxiosInstance.delete(URL, config);
+       console.log(`deleteTripDetails response: ${res.data}`);
+       return { response: res.data };
+      } catch (error) {
+         console.log(`deleteTripDetails error: `, error)
+        if (error.response) {
+          return rejectWithValue({
+            status: error.response.status,
+            data: error.response.data,
+          });
+        } else {
+          return rejectWithValue({
+            status: -1,
+            data: { message: "Network Error" },
+          });
+        }
+
+      }
+    }
 );
 
 export const createTodoDetails = createAsyncThunk(

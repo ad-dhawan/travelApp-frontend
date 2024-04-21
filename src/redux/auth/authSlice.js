@@ -25,7 +25,7 @@ export const authSlice = createSlice({
       state.status = null;
     },
     resetState: (state) => {
-      state = initialState
+      Object.assign(state, initialState);
     },
   },
    extraReducers: (builder) => {

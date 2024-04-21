@@ -13,16 +13,20 @@ import Loading from '../../components/loading';
 import OnboardingScreen from '../../components/onboarding';
 
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './style';
-import { TEXT_WHITE } from '../../utils/colors';
+import { ICON, ICON_DARK, TEXT_WHITE } from '../../utils/colors';
 
 //CONSTANTS
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../utils/values';
+import Header from '../../components/header';
 
 const FILE_NAME = 'upcomingtripscreen.js';
 
 const UpcomingTrips = ({navigation}) => {
+    const navigationParams = navigation?.state?.params
     const state = useSelector((state) => state.trip);
 
     const [loading, setLoading] = useState(true);
@@ -46,6 +50,11 @@ const UpcomingTrips = ({navigation}) => {
 
     useEffect(() => {
         if (state.tripDetails.length !== 0) {
+            if(navigationParams && navigationParams.tripId){
+                setTripDetails(state.tripDetails[0]);
+                return;
+            }
+
             // Find the trip with the smallest end_date
             const smallestEndDateTrip = state.tripDetails.reduce((min, trip) => {
                 if (trip.end_date < moment().unix()) {
@@ -60,7 +69,8 @@ const UpcomingTrips = ({navigation}) => {
             setTripDetails(smallestEndDateTrip);
             setLoading(false);
         } else {
-            dispatch(getTripDetails());
+            if(navigationParams && navigationParams.tripId) dispatch(getTripDetails({tripId: navigationParams.tripId}))
+            else dispatch(getTripDetails())
         }
     }, [state.tripDetails]);
 
@@ -73,6 +83,8 @@ const UpcomingTrips = ({navigation}) => {
                 const duration = moment.duration(diff);
 
                 setTimeLeft({
+                    years: duration.years(),
+                    months: duration.months(),
                     days: duration.days(),
                     hours: duration.hours(),
                     minutes: duration.minutes(),
@@ -91,7 +103,7 @@ const UpcomingTrips = ({navigation}) => {
                 break;
 
             case 'todo':
-                navigation.navigate('todo', {tripId: tripDetails._id});
+                navigation.push('todo', {tripId: tripDetails._id});
                 break;
             
             case 'notes':
@@ -125,20 +137,54 @@ const UpcomingTrips = ({navigation}) => {
 
     if (loading) return <Loading />;
     if(state.tripDetails && state.tripDetails.length === 0) return <OnboardingScreen />
-    if(tripDetails.end_date < moment().unix()) {
+    if(!navigationParams?.tripId && tripDetails?.end_date < moment().unix()) {
         navigation.navigate('myTrips');
         return;
     }
 
     return (
         <>
+            {navigationParams?.showHeader && <Header title={'Your trip'} navigation={navigation} />}
             <View>
                 <ImageBackground style={styles.headerFooter}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.tripTitle} >{tripDetails.title}</Text>
+                        <View style={styles.tripTitleDateContainer} >
+                            <View>
+                                <Text style={styles.tripTitle} >{tripDetails.title}</Text>
+                                <Text style={styles.tripDate} >{moment.unix(tripDetails.start_date).format('DD MMM')} - {moment.unix(tripDetails.end_date).format('DD MMM YYYY')}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                                <TouchableOpacity onPress={() => navigation.push('profile')} >
+                                    <Ionicons name={'person-circle'} size={35} color={ICON} />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => navigation.push('editTrip', {tripDetails})} >
+                                    <MaterialIcons name={'settings'} size={35} color={ICON_DARK} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
 
                         {/* {timeLeft.days !== 0 && timeLeft.hours !== 0 && timeLeft.minutes !== 0 && timeLeft.seconds !== 0 && ( */}
                             <View style={styles.timeLeftContainer} >
+                                {timeLeft.years !== 0 &&
+                                    <View style={styles.timeLeftItem} >
+                                        <Text style={styles.timeLeft} >{timeLeft.years <= 0 ? '00' : timeLeft.years}</Text>
+                                        <Text style={styles.timeLeftText} >Years</Text>
+                                    </View>
+                                }
+
+                                {timeLeft.years !== 0 && <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text>}
+
+                                {timeLeft.months !== 0 &&
+                                    <View style={styles.timeLeftItem} >
+                                        <Text style={styles.timeLeft} >{timeLeft.months <= 0 ? '00' : timeLeft.months}</Text>
+                                        <Text style={styles.timeLeftText} >Months</Text>
+                                    </View>
+                                }
+
+                                {timeLeft.months !== 0 && <Text style={{marginTop: 10, alignSelf: 'flex-start', fontWeight: 'bold'}} >:</Text>}
+
                                 <View style={styles.timeLeftItem} >
                                     <Text style={styles.timeLeft} >{timeLeft.days <= 0 ? '00' : timeLeft.days}</Text>
                                     <Text style={styles.timeLeftText} >Days</Text>

@@ -22,6 +22,8 @@ import PackingList from './screens/trip/packinglistscreen';
 import Todo from './screens/trip/todoscreen';
 import Transport from './screens/trip/transportscreen';
 import PdfViewer from './screens/trip/pdfviewer';
+import CreateTrip from './screens/trip/createtrip';
+import EditTrip from './screens/trip/edittrip';
 
 export function createAppNavigator(routes) {
   const AppNavigator = createStackNavigator(routes, {
@@ -36,10 +38,12 @@ export function createAppNavigator(routes) {
 const routes = {
   splash: { screen: Splash },
   login: { screen: Login },
-  upcomingTrips: { screen: UpcomingTrips },
   // dashboard: { screen: Dashboard },
+  upcomingTrips: { screen: UpcomingTrips },
   profile: { screen: Profile },
   myTrips: { screen: MyTrips },
+  createTrip: { screen: CreateTrip },
+  editTrip: { screen: EditTrip },
   bookings: { screen: Bookings },
   documents: { screen: Documents },
   itinerary: { screen: Itinerary },

@@ -14,6 +14,7 @@ import Header from '../../components/header';
 import Loading from '../../components/loading';
 import AppButton from '../../components/button';
 import AppTextInput from '../../components/textinput';
+import AppDateTimePicker from '../../components/datetimepicker';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -34,6 +35,9 @@ const Itinerary = ({ navigation }) => {
     const [itineraryDetails, setItineraryDetails] = useState([]);
     const [newItinerary, setNewItinerary] = useState('');
     const [selectedTab, setSelectedTab] = useState('');
+
+    const [isStartTimePickerVisible, setIsStartTimePickerVisible] = useState(false);
+    const [isEndTimePickerVisible, setIsEndTimePickerVisible] = useState(false);
 
     useEffect(() => {
         console.log(`In ${FILE_NAME}: useEffect`);
@@ -110,6 +114,33 @@ const Itinerary = ({ navigation }) => {
         )
     }
 
+    const showStartTimePicker = () => {
+        setIsStartTimePickerVisible(true);
+    };
+    
+    const hideStartTimePicker = () => {
+        setIsStartTimePickerVisible(false);
+    };
+    
+    const handleStartTimePicked = (time) => {
+        setNewItinerary(prevState => ({...prevState, startTime: moment(time).format('hh:mm A')}));
+        hideStartTimePicker();
+    };
+    
+    const showEndTimePicker = () => {
+        setIsEndTimePickerVisible(true);
+    };
+    
+    const hideEndTimePicker = () => {
+        setIsEndTimePickerVisible(false);
+    };
+    
+    const handleEndTimePicked = (time) => {
+        setNewItinerary(prevState => ({...prevState, endTime: moment(time).format('hh:mm A')}));
+        hideEndTimePicker();
+    };
+    
+
     const onPressCancel = () => {
         setNewItinerary('');
         bottomSheetRef.current.close();
@@ -157,6 +188,7 @@ const Itinerary = ({ navigation }) => {
                 ref={bottomSheetRef}
                 height={500}
                 closeOnDragDown={true}
+                onClose={() => setNewItinerary('')}
                 customStyles={{
                     container: {
                         borderTopLeftRadius: 20,
@@ -187,18 +219,23 @@ const Itinerary = ({ navigation }) => {
                     />
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                        <AppTextInput
-                            placeholder="Start Time"
-                            value={newItinerary.startTime}
-                            onChangeText={text => setNewItinerary(prevState => ({...prevState, startTime: text}))}
-                            customStyle={{marginBottom: 10, textAlignVertical : 'top', flex: 0.5}}
-                        />
-                        <AppTextInput
-                            placeholder="End Time"
-                            value={newItinerary.endTime}
-                            onChangeText={text => setNewItinerary(prevState => ({...prevState, endTime: text}))}
-                            customStyle={{marginBottom: 10, textAlignVertical : 'top', flex: 0.5}}
-                        />
+                        <TouchableOpacity onPress={showStartTimePicker} style={{ flex: 0.5 }} >
+                            <AppTextInput
+                                placeholder="Start Time"
+                                value={newItinerary.startTime}
+                                customStyle={{marginBottom: 10, textAlignVertical : 'top'}}
+                                editable={false}
+                            />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={showEndTimePicker} style={{ flex: 0.5 }} >
+                            <AppTextInput
+                                placeholder="End Time"
+                                value={newItinerary.endTime}
+                                customStyle={{marginBottom: 10, textAlignVertical : 'top'}}
+                                editable={false}
+                            />
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
@@ -207,6 +244,26 @@ const Itinerary = ({ navigation }) => {
                     </View>
                 </View>
             </RBSheet>
+
+            <AppDateTimePicker
+                isEwDateTimePickerVisible={isStartTimePickerVisible}
+                modeEwDateTimePicker="time"
+                _hideEwDateTimePicker={hideStartTimePicker}
+                _handleEwDateTimePicked={handleStartTimePicked}
+                elementKey="startTimePicker"
+                setDateTimePicker={new Date()} // Set to current time or default time
+                set24TimeFormat={true}
+            />
+
+            <AppDateTimePicker
+                isEwDateTimePickerVisible={isEndTimePickerVisible}
+                modeEwDateTimePicker="time"
+                _hideEwDateTimePicker={hideEndTimePicker}
+                _handleEwDateTimePicked={handleEndTimePicked}
+                elementKey="endTimePicker"
+                setDateTimePicker={new Date()} // Set to current time or default time
+                set24TimeFormat={true}
+            />
         </>
     );
 };

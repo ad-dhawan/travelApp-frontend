@@ -12,17 +12,18 @@ import { getTripDetails } from '../../redux/trips/tripActions';
 import Loading from '../../components/loading';
 import OnboardingScreen from '../../components/onboarding';
 
-import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import styles from './style';
-import { TEXT_WHITE } from '../../utils/colors';
+import { PRIMARY_BRAND_2, TEXT_WHITE } from '../../utils/colors';
 
 //CONSTANTS
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../utils/values';
+import Header from '../../components/header';
 
 const FILE_NAME = 'mytripscreen.js';
 
-const MyTrips = () => {
+const MyTrips = ({navigation}) => {
     const state = useSelector((state) => state.trip);
 
     const [loading, setLoading] = useState(true);
@@ -53,7 +54,7 @@ const MyTrips = () => {
     const renderTrips = ({ item, index }) => {
         return(
             <>
-                <View style={styles.pastTripsItemParentContainer} >
+                <TouchableOpacity onPress={() => navigation.push('upcomingTrips', {tripId: item._id, showHeader: true})} style={styles.pastTripsItemParentContainer} >
                     <Image source={{ uri: `data:image/png;base64,${item.cover_image}` }} style={styles.pastTripsItemImage} />
 
                     <View style={styles.pastTripsItemDetailsContainer} >
@@ -64,13 +65,14 @@ const MyTrips = () => {
 
                         <Text style={styles.pastTripsItemDate} >{moment.unix(item.start_date).format('DD MMM')} - {moment.unix(item.end_date).format('DD MMM YYYY')}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </>
         )
     }
 
     return(
         <>
+            {navigation?.state?.params?.showHeader && <Header navigation={navigation} title={'My trips'} />}
             <ScrollView style={styles.pastTripsParentContainer} showsVerticalScrollIndicator={false} >
                 <Text style={styles.pastTripsHeading} >Past Trips</Text>
 
@@ -80,6 +82,13 @@ const MyTrips = () => {
                     keyExtractor={(item) => item._id}
                 />
             </ScrollView>
+
+            <TouchableOpacity
+                onPress={() => navigation.push('createTrip')}
+                style={styles.addButton}
+                hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+                <AntDesign name={'pluscircle'} size={45} color={PRIMARY_BRAND_2} />
+            </TouchableOpacity>
         </>
     )
 };

@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {  
+  createNewTrip,
   getTripDetails,
+  editTripDetails,
+  deleteTripDetails,
 
   createTodoDetails,
   getTodoDetails,
@@ -66,6 +69,23 @@ export const tripSlice = createSlice({
     },
   },
    extraReducers: (builder) => {
+    builder.addCase(createNewTrip.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createNewTrip.fulfilled, (state, { payload }) => {
+      console.log("create new trip payload",payload);
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(createNewTrip.rejected, (state, { payload }) => {
+      console.log(payload);
+      state.loading = false;
+      state.status = payload?.status;
+      state.error = true;
+      state.message = payload?.data?.message;
+    });
+
+
      builder.addCase(getTripDetails.pending, (state) => {
        state.loading = true;
      });
@@ -76,6 +96,40 @@ export const tripSlice = createSlice({
        state.tripDetails = payload?.response?.trips;
      });
      builder.addCase(getTripDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(editTripDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(editTripDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(editTripDetails.rejected, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.status = payload?.status;
+       state.error = true;
+       state.message = payload?.data?.message;
+     });
+
+
+     builder.addCase(deleteTripDetails.pending, (state) => {
+       state.loading = true;
+     });
+     builder.addCase(deleteTripDetails.fulfilled, (state, { payload }) => {
+       console.log(payload);
+       state.loading = false;
+       state.success = true;
+     });
+     builder.addCase(deleteTripDetails.rejected, (state, { payload }) => {
        console.log(payload);
        state.loading = false;
        state.status = payload?.status;
